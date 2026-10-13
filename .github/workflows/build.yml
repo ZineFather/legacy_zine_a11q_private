@@ -1,20 +1,18 @@
-name: Build ProjectNERV
+name: Build ZineROM One UI 7 (Galaxy A52s 5G)
 
 on:
   workflow_dispatch:
-  pull_request:
-  push:
-    branches:
-      - 'paradigm'
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-24.04
-
     strategy:
       fail-fast: false
       matrix:
-        target: [a51, a52sxq, a71, a73xq, m52xq, r9q, r9q2]
+        target: [a52sxq]
 
     steps:
       - name: Checkout repo
@@ -49,8 +47,6 @@ jobs:
           sudo modprobe erofs f2fs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/platform.pk8
-          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/platform.x509.pem
 
       - name: Set up JDK 11
         uses: actions/setup-java@v4
@@ -87,17 +83,28 @@ jobs:
       - name: Build ROM
         run: |
           source ./buildenv.sh ${{ matrix.target }}
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]] && \
-              [[ "${{ github.ref }}" == "refs/heads/paradigm" ]]; then
-              ./scripts/make_rom.sh
-          else
-              ./scripts/make_rom.sh --no-rom-zip
-          fi
+          ./scripts/make_rom.sh
 
-      - name: Upload to GoFile
-        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/paradigm'
+      - name: Verify ZIP
         run: |
-          ZIP_FILE=$(find out -maxdepth 1 -type f -name "*.zip" | head -n 1)
-          RESPONSE=$(curl -s -F "file=@$ZIP_FILE" -F "token=${{ secrets.GOFILE_TOKEN }}" -F "folderId=${{ secrets.GOFILE_FOLDER_ID }}" "https://upload-eu-par.gofile.io/uploadFile")
-          echo "Download link:"
-          echo "$RESPONSE" | jq -r '.data.downloadPage'
+          test -s out/ZineROM_OneUI7_a52xq.zip
+          sha256sum out/ZineROM_OneUI7_a52xq.zip
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZineROM_OneUI7_a52xq-${{ github.run_number }}
+          path: out/ZineROM_OneUI7_a52xq.zip
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Publish test download release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="zinerom-oneui7-a52sxq-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" out/ZineROM_OneUI7_a52xq.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "ZineROM Project stable [a52sxq]" \
+            --notes "Experimental test build for Samsung Galaxy A52s 5G (SM-A528B, codename a52sxq). It keeps the upstream S23 One UI 7 QSSI source base; the A73 base was not changed. This has not been tested on physical hardware and is not confirmed to boot. Do not flash on other models. Keep a tested stock firmware package and recovery/Download Mode access available." \
+            --prerelease
