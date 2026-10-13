@@ -116,6 +116,21 @@ GET_LATEST_FIRMWARE()
     _CHECK_NON_EMPTY_PARAM "MODEL" "$1" || return 1
     _CHECK_NON_EMPTY_PARAM "CSC" "$2" || return 1
 
+    # Optional pinned firmware map for reproducible/offline builds.
+    # Format: one MODEL/CSC=AP/CSC/MODEM entry per line.
+    if [ -n "${SAMFW_PINNED_FIRMWARES:-}" ]; then
+        local ENTRY KEY VALUE
+        while IFS= read -r ENTRY; do
+            [[ "$ENTRY" == *=* ]] || continue
+            KEY="${ENTRY%%=*}"
+            VALUE="${ENTRY#*=}"
+            if [[ "$KEY" == "$1/$2" ]] && [ -n "$VALUE" ]; then
+                printf '%s\n' "$VALUE"
+                return 0
+            fi
+        done <<< "$SAMFW_PINNED_FIRMWARES"
+    fi
+
     curl -s --retry 5 --retry-delay 5 "https://fota-cloud-dn.ospserver.net/firmware/$2/$1/version.xml" \
         | perl -nE 'say $1 if /<latest[^>]*>(.*?)<\/latest>/'
 }

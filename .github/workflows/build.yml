@@ -71,22 +71,28 @@ jobs:
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/build_dependencies.sh
 
-      - name: Download source firmware
+      - name: Download and validate pinned firmware archives
+        env:
+          SOURCE_FIRMWARE_URL: ${{ secrets.SAMFW_SOURCE_URL }}
+          TARGET_FIRMWARE_URL: ${{ secrets.SAMFW_TARGET_URL }}
         run: |
           source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/download_fw.sh --ignore-target
+          ./scripts/import_samfw_firmware.sh
 
       - name: Extract source firmware
+        env:
+          SAMFW_PINNED_FIRMWARES: |
+            SM-S911B/BTB=S911BXXS8DYI3/S911BOXM8DYI3/CP31479988
+            SM-A528B/BTU=A528BXXSBGYI3/A528BOXMBGYI3/CP31566566
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/extract_fw.sh --ignore-target
 
-      - name: Download target firmware
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/download_fw.sh --ignore-source
-
       - name: Extract target firmware
+        env:
+          SAMFW_PINNED_FIRMWARES: |
+            SM-S911B/BTB=S911BXXS8DYI3/S911BOXM8DYI3/CP31479988
+            SM-A528B/BTU=A528BXXSBGYI3/A528BOXMBGYI3/CP31566566
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/extract_fw.sh --ignore-source
@@ -114,8 +120,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="zinerom-oneui7-a52sxq-${GITHUB_RUN_NUMBER}"
-          gh release create "$TAG" out/ZineROM_OneUI7_a52xq.zip \
+          if ! gh release create "$TAG" out/ZineROM_OneUI7_a52xq.zip \
             --repo "$GITHUB_REPOSITORY" \
             --title "ZineROM Project stable [a52sxq]" \
             --notes "Experimental test build for Samsung Galaxy A52s 5G (SM-A528B, codename a52sxq). It keeps the upstream S23 One UI 7 QSSI source base; the A73 base was not changed. This has not been tested on physical hardware and is not confirmed to boot. Do not flash on other models. Keep a tested stock firmware package and recovery/Download Mode access available." \
-            --prerelease
+            --prerelease; then
+            echo "::warning::Release creation failed; the ZIP artifact uploaded above remains available in this workflow run."
+          fi
