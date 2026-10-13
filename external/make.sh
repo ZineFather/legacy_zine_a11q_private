@@ -257,7 +257,7 @@ if $MAGISKBOOT; then
     esac
     MAGISKBOOT_TMP="$(mktemp -d)"
     MAGISKBOOT_CMDS=(
-        "curl -L -s -o \"magisk.apk\" \"$(curl -s https://api.github.com/repos/topjohnwu/Magisk/releases/latest | jq -r ".assets[] | .browser_download_url" | grep "Magisk.*.apk")\""
+        "curl -L -s -o \"magisk.apk\" \"$(curl -s https://api.github.com/repos/topjohnwu/Magisk/releases/latest | jq -r '.assets[] | select(.name | startswith(\"Magisk-\")) | .browser_download_url')\""
         "unzip -q -j \"magisk.apk\" \"lib/$ARCH/libmagiskboot.so\""
         "mv \"libmagiskboot.so\" \"$TOOLS_DIR/bin/magiskboot\""
         "chmod +x \"$TOOLS_DIR/bin/magiskboot\""
