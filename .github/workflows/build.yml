@@ -66,36 +66,26 @@ jobs:
           java-version: '11'
           cache: 'gradle'
 
+      - name: Install pinned Samloader
+        run: |
+          curl --fail --location --silent --show-error \
+            https://github.com/topjohnwu/samloader-rs/releases/download/2.2.0/samloader-v2.2.0-linux-x86_64.zip \
+            --output /tmp/samloader.zip
+          echo "f6029dcce75b8a66acc1975529085c53903f7cdb35505e0ac0a973f2652480ff  /tmp/samloader.zip" | sha256sum --check --status
+          unzip -p /tmp/samloader.zip samloader > /tmp/samloader
+          chmod 0755 /tmp/samloader
+          sudo install -m 0755 /tmp/samloader /usr/local/bin/samloader
+          samloader --version
+
       - name: Build dependencies
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/build_dependencies.sh
 
-      - name: Download and validate pinned firmware archives
-        env:
-          SOURCE_FIRMWARE_URL: ${{ secrets.SAMFW_SOURCE_URL }}
-          TARGET_FIRMWARE_URL: ${{ secrets.SAMFW_TARGET_URL }}
+      - name: Download, validate, and extract pinned Samsung firmware
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/import_samfw_firmware.sh
-
-      - name: Extract source firmware
-        env:
-          SAMFW_PINNED_FIRMWARES: |
-            SM-S911B/BTB=S911BXXS8DYI3/S911BOXM8DYI3/CP31479988
-            SM-A528B/BTU=A528BXXSBGYI3/A528BOXMBGYI3/CP31566566
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/extract_fw.sh --ignore-target
-
-      - name: Extract target firmware
-        env:
-          SAMFW_PINNED_FIRMWARES: |
-            SM-S911B/BTB=S911BXXS8DYI3/S911BOXM8DYI3/CP31479988
-            SM-A528B/BTU=A528BXXSBGYI3/A528BOXMBGYI3/CP31566566
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/extract_fw.sh --ignore-source
 
       - name: Build ROM
         run: |
