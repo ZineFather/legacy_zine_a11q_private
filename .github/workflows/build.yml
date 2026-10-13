@@ -18,7 +18,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: false
+
+      - name: Checkout required build submodules
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --depth=1 --recursive \
+            external/android-tools \
+            external/apktool \
+            external/erofs-utils \
+            external/img2sdat \
+            external/samloader \
+            external/signapk
 
       - name: Free disk space (1/3)
         run: |
