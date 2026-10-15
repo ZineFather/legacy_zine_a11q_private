@@ -1,5 +1,9 @@
 # ZineROM Project (Releases On Telegram)
 
+<p align="center">
+  <img src="readme-res/file_00000000920472468c600f5ff5ddbb49.png" alt="ZineROM Logo" width="750">
+</p>
+
 Welcome to the official repository of **ZineROM**, a next-generation custom Android ROM ecosystem focused on deep system modification, advanced UI enhancements, and performance-oriented framework tuning. 
 
 Powered by the **ZineROM Engine**, our builds break native software limitations to bring a smooth, lightweight, and modern One UI experience to supported devices.
