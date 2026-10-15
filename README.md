@@ -1,79 +1,99 @@
-<h1 align="center">
-  <img loading="lazy" src="readme-res/banner.png"/>
-</h1>
-<p align="center">
-  <a href="https://github.com/yagzie/legacy_nerv/blob/fifteen/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/yagzie/NERV?style=for-the-badge&logo=github"/></a>
-  <a href="https://github.com/yagzie/legacy_nerv/commits/fifteen"><img loading="lazy" src="https://img.shields.io/github/last-commit/yagzie/NERV/paradigm?style=for-the-badge"/></a>
-  <a href="https://github.com/yagzie/legacy_nerv/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/yagzie/NERV?style=for-the-badge"/></a>
-  <a href="https://github.com/yagzie/legacy_nerv/graphs/contributors"><img loading="lazy" src="https://img.shields.io/github/contributors/yagzie/NERV?style=for-the-badge"/></a>
-  <a href="https://github.com/yagzie/legacy_nerv/actions/workflows/build.yml"><img loading="lazy" src="https://img.shields.io/github/actions/workflow/status/yagzie/legacy_nerv/build.yml?style=for-the-badge"/></a>
-</p>
-<p align="center">UN1CA <i>(/ˈu.ni.ka/)</i> is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
+# ZineROM Project (Releases On Telegram)
 
-<p align="center">
-  <a href="https://t.me/unicarom">💬 UN1CA Telegram</a>
-</p>
+Welcome to the official repository of **ZineROM**, a next-generation custom Android ROM ecosystem focused on deep system modification, advanced UI enhancements, and performance-oriented framework tuning. 
 
-<p align="center">
-  <a href="https://t.me/SE_NERV">💬 NERV Telegram</a>
-</p>
+Powered by the **ZineROM Engine**, our builds break native software limitations to bring a smooth, lightweight, and modern One UI experience to supported devices.
 
-# What is UN1CA?
-UN1CA is a work-in-progress custom firmware for Samsung Galaxy devices. It's based on the latest and greatest iteration of Samsung's UX and it also includes additional features and tweaks to ensure the best possible experience out of the box.
-Its build system allows to automatically download/extract the firmware, apply the required patches and generates a flashable zip package for the specified device.
+---
 
-Any form of contribution, suggestions, bug report or feature request for the project will be welcome.
+## ⚙️ What is ZineROM Engine?
 
-# What is NERV?
-NERV is a fork of UN1CA; to make the build system work with One UI 7, we are aiming for an UN1CA-like experience with what we can do. All changes have been made under GPLv3, if you see any problems about credits at repo, please kindly report to me at Telegram, XDA or email. 
+The **ZineROM Engine** is the core system layer running behind all ZineROM builds. It acts as a unified modification framework that enables high-level system control without breaking core architectural stability.
 
-# Features
-- Based on the latest Samsung devices firmware:
-  - Galaxy S23 (Paradigm)
-  - Galaxy S23 FE (Paradigm)
-  - Galaxy A73 5G (Fun)
-- Galaxy AI support
-- App Lock Support
-- High end animations
-- Screenshots from Secure Apps support
-- ASKS disabled 
-- APK Downgrade support
-- Native/live blur support (Paradigm)
-- Adaptive refresh rate support (Paradigm)
-- Extra brightness support
-- Picture remaster support
-- Object, shadow and reflection eraser support
-- Image clipper support
-- Smart Suggestions widget
-- Samsung Now Brief support
-- Multi user support
-- Samsung DeX support (Paradigm)
-- Camera privacy toggle support
-- Debloated from useless system services/additional apps
-- [BluetoothLibraryPatcher](https://github.com/3arthur6/BluetoothLibraryPatcher) included
-- [KnoxPatch](https://github.com/salvogiangri/KnoxPatch) implemented in system frameworks
+---
 
-# Licensing
-This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE). External dependencies might be distributed under a different license, such as:
-- [android-tools](https://github.com/nmeum/android-tools), licensed under the [Apache License 2.0](https://github.com/nmeum/android-tools/blob/master/LICENSE)
-- [apktool](https://github.com/iBotPeaches/Apktool), licensed under the [Apache License 2.0](https://github.com/iBotPeaches/Apktool/blob/master/LICENSE.md)
-- [erofs-utils](https://github.com/sekaiacg/erofs-utils/), dual license ([GPL-2.0](https://github.com/sekaiacg/erofs-utils/blob/dev/LICENSES/GPL-2.0), [Apache-2.0](https://github.com/sekaiacg/erofs-utils/blob/dev/LICENSES/Apache-2.0))
-- [img2sdat](https://github.com/xpirt/img2sdat), licensed under the [MIT License](https://github.com/xpirt/img2sdat/blob/master/LICENSE)
-- [platform_build](https://android.googlesource.com/platform/build/) (ext4_utils, f2fs_utils, signapk), licensed under the [Apache License 2.0](https://source.android.com/docs/setup/about/licenses)
-- [smali](https://github.com/google/smali), [multiple licenses](https://github.com/google/smali/blob/main/third_party/NOTICE)
+# Comprehensive Feature Sheet (ZineROM Update 8.5/8.0/7.0) 
 
-# Credits
-A big thanks goes to the following for their invaluable contributions in no particular order:
-- **[ShaDisNX255](https://github.com/ShaDisNX255)** for his help, time and for his [NcX ROM](https://github.com/ShaDisNX255/NcX_Stock) which inspired this project
-- **[DavidArsene](https://github.com/DavidArsene)** for his help and time
-- **[paulowesll](https://github.com/paulowesll)** for his help and support
-- **[Simon1511](https://github.com/Simon1511)** for his support and some of the device-specific patches
-- **[ananjaser1211](https://github.com/ananjaser1211)** for troubleshooting and his time
-- **[iDrinkCoffee](https://github.com/iDrinkCoffee-TG)** and **[RisenID](https://github.com/RisenID)** for documentation revisioning
-- **[LineageOS Team](https://www.lineageos.org/)** for their original [OTA updater implementation](https://github.com/LineageOS/android_packages_apps_Updater)
-- **[Bobert10](https://t.me/bobert10)** for the NERV banner
-- **[All Kangers]** for making me laugh with your rebranded repos with no difference
-- *All the UN1CA project contributors and testers ❤️*
+ZineROM Engine does not just port apps; it reconstructs the entire system framework to deliver a true, uncompromised flagship experience on midrange and budget phones. Below is the detailed breakdown of the architectural and user-facing features packed into this release.
 
-# Stargazers over time
-[![Stargazers over time](https://starchart.cc/yagzie/NERV.svg)](https://starchart.cc/yagzie/NERV)
+---
+
+### Full-Scale Galaxy AI Suite (Next-Gen Intelligence)
+Experience unrestricted flagship artificial intelligence, carefully optimized to execute smoothly without system overhead:
+* **Writing & Note Assist:** Advanced contextual rewriting, auto-formatting, summaries, and spelling corrections.
+* **Semantic Search & Interpreter:** High-speed local data indexing and real-time conversation translation.
+* **Drawing & Creative Assist:** Generative sketching tools and smart image interpretation.
+* **Browsing, Call & Transcript Assist:** Automated web article summarization, real-time call translation, and smart voice-to-text audio scrubbing.
+* **Advanced Media Erasers:** Complete native support for Object Eraser, Shadow Eraser, Reflection Eraser, and Audio Eraser.
+
+### Flagship Visuals & Premium Framework Injection
+* **ZineROM Update Screen 8.5:** Integrated exclusive system update dashboard and customized UI compilation layout.
+* **High-End Animation Scaling:** Full flagship transition physics injected into the core animator framework.
+* **Native & Live Blur Engine:** Real-time Gaussian blur processing enabled system-wide across the notification panel and app windows.
+* **AOD Clock Transition Support:** Seamless, uninterrupted display handoff from the Always On Display to the lock screen.
+* **Adaptive Color Tone & Refresh Rate:** Active system monitoring to adjust screen warmth and dynamically scale refresh rates based on content.
+* **Extra Brightness Mode:** Decouples hardware restrictions to unlock maximum display nit levels under direct sunlight.
+
+### Advanced Imaging & System Ergonomics
+* **Picture Remaster & Image Clipper:** High-fidelity photo restoration algorithms and smart long-press object lifting from the gallery.
+* **Samsung DeX Support:** Full desktop environment execution unlocked natively (Note: *DeX via HDMI requires target hardware with USB-C DisplayPort support*).
+* **Camera Privacy Toggle:** Hardware-level privacy masking via a native system quick-setting tile.
+* **Multi-User Profiles:** Complete isolated space provisioning for independent user environments on a single device.
+* **Universal Dual Messenger:** Unlocked framework restrictions to allow cloning and dual-instance execution for **ALL** installed apps, not just standard social apps.
+
+### Underlying Optimization & Base Architecture
+* **Monolithic Base Fusion:** Compiled using the latest stable flagship branches from Galaxy S23 FE, A35, S21 FE, and S24+ firmware.
+* **EROFS Powered Filesystem:** Read-only system partitions are strictly packed using EROFS to guarantee maximum compression, faster random-read speeds, and zero system degradation over time.
+* **Deep Debloating:** Stripped clean of useless background tracking services, duplicate carrier utilities, and battery-draining telemetry scripts.
+
+---
+
+## 🛠️ Flash Tutorial
+
+> ⚠️ **Disclaimer / Hard Warning:** Your warranty is now void. I am **NOT** responsible for bricked devices, dead SD cards, thermonuclear war, or you getting fired because the alarm app failed. Please do some research if you have any concerns about features included in this ROM before flashing it! YOU are choosing to make these modifications.
+
+### Prerequisite: Unlock Bootloader
+Before starting, your device's bootloader must be completely unlocked. 
+* If you don't know how to unlock the bootloader on your Samsung device, follow the official and detailed guide on [XDA Developers Bootloader Unlock Guide](https://xdaforums.com/t/how-to-unlock-bootloader.4244757/).
+
+### Flashing Steps (via TWRP / Custom Recovery):
+1. Reboot your device into your custom recovery.
+2. Go to Wipe and perform a clean wipe (`Data`, `Cache`, `Dalvik`, and `System`).
+3. Flash the system images in the following strict order:
+   * **Flash `system.img`**
+   * **Flash `product.img`**
+   * **Flash `system.ext.img`**
+4. Go to Wipe -> Select **Format Data** and type `yes`.
+5. Reboot your system and enjoy!
+
+---
+
+## 📥 Download Links
+
+* 📦 **Check GitHub Releases:** Always check the [GitHub Releases](../../releases) section of this repository for the latest official stable and beta builds.
+
+---
+
+## 📢 Community, Updates & Support
+
+Stay updated with the latest changelogs, build announcements, and active support by joining our community channels:
+
+* 📱 **ZineROM Channel:** [Join Here](https://t.me/customromguy)
+* 💬 **ZineROM Group:** [Join Here](https://t.me/customromguy)
+
+---
+
+## 🤝 Open Source & Contributions
+
+ZineROM is built with a philosophy of open collaboration. We welcome developers, porters, and testers to clone, fork, and help improve the framework.
+1. **Fork** the repository.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes and open a **Pull Request**.
+
+---
+
+## 🧠 Credits 
+
+* **Samsung Electronics** - For the One UI software base.
+* **Lead Developer:** @Zinefather & (ZineROM Engine Architecture).
+* **Community Contributors:** Special thanks to all the dedicated testers and developers🙏.
