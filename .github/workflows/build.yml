@@ -94,14 +94,14 @@ jobs:
 
       - name: Verify ZIP
         run: |
-          test -s out/ZineROM_OneUI7_a52xq.zip
-          sha256sum out/ZineROM_OneUI7_a52xq.zip
+          test -s out/ZineROM_OneUI7_a52xq-V3.zip
+          sha256sum out/ZineROM_OneUI7_a52xq-V3.zip
 
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ZineROM_OneUI7_a52xq-${{ github.run_number }}
-          path: out/ZineROM_OneUI7_a52xq.zip
+          name: ZineROM_OneUI7_a52xq-V3-${{ github.run_number }}
+          path: out/ZineROM_OneUI7_a52xq-V3.zip
           if-no-files-found: error
           retention-days: 90
 
@@ -110,10 +110,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="zinerom-oneui7-a52sxq-${GITHUB_RUN_NUMBER}"
-          if ! gh release create "$TAG" out/ZineROM_OneUI7_a52xq.zip \
+          if ! gh release create "$TAG" out/ZineROM_OneUI7_a52xq-V3.zip \
             --repo "$GITHUB_REPOSITORY" \
             --title "ZineROM Project stable [a52sxq]" \
-            --notes "Experimental test build for Samsung Galaxy A52s 5G (SM-A528B, codename a52sxq). It keeps the upstream S23 One UI 7 QSSI source base; the A73 base was not changed. This has not been tested on physical hardware and is not confirmed to boot. Do not flash on other models. Keep a tested stock firmware package and recovery/Download Mode access available." \
+            --notes "Experimental test build for Samsung Galaxy A52s 5G (SM-A528B, codename a52sxq). Branding: ZineROM. It keeps the upstream S23 One UI 7 QSSI source base; the A73 base was not changed. This has not been tested on physical hardware and is not confirmed to boot. Do not flash on other models. Keep a tested stock firmware package and recovery/Download Mode access available." \
             --prerelease; then
             echo "::warning::Release creation failed; the ZIP artifact uploaded above remains available in this workflow run."
           fi
