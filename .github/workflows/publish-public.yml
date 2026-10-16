@@ -1,0 +1,46 @@
+name: Publish ZineROM V3 Public Download
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Successful build run ID'
+        required: true
+        default: '38817227822'
+        type: string
+
+permissions:
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download build artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.run_id }}
+        run: |
+          mkdir -p payload
+          gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --dir payload
+          ZIP=$(find payload -type f -name 'ZineROM_OneUI7_a52xq-V3.zip' | head -1)
+          test -s "$ZIP"
+          echo "ZIP=$ZIP" >> "$GITHUB_ENV"
+          sha256sum "$ZIP" | tee payload/SHA256SUMS.txt
+      - name: Verify ZIP archive
+        run: unzip -t "$ZIP" >/dev/null
+      - name: Upload to public GoFile storage
+        id: upload
+        run: |
+          RESPONSE=$(curl --fail --retry 5 --retry-all-errors \
+            -F "file=@$ZIP;filename=ZineROM_OneUI7_a52xq-V3.zip" \
+            https://upload.gofile.io/uploadfile)
+          echo "$RESPONSE" | jq -e '.status == "ok"' >/dev/null
+          URL=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
+          test -n "$URL" && test "$URL" != "null"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          printf 'Public download page: %s\n' "$URL" >> "$GITHUB_STEP_SUMMARY"
+          printf '\nSHA-256:\n' >> "$GITHUB_STEP_SUMMARY"
+          cat payload/SHA256SUMS.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Show public link
+        run: echo "Public download page: ${{ steps.upload.outputs.url }}"
