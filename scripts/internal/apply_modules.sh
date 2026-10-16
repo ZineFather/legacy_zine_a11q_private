@@ -91,6 +91,15 @@ APPLY_SMALI_PATCHES()
         local FILE="$TARGET"
         [[ "$PARTITION" != "system" ]] && FILE="$(cut -d "/" -f 2- -s <<< "$FILE")"
 
+        # The A73 One UI 7 source has a different HdmManager smali layout.
+        # Keep the rest of deKnox active, but skip only this stale qssi patch
+        # instead of aborting the complete ROM build.
+        if [[ "$SOURCE_FIRMWARE" == SM-A736B/* \
+            && "$p" == *"deknox/qssi/smali/system_ext/priv-app/StorageManager"* ]]; then
+            LOG "- Skipping incompatible A73 StorageManager deKnox patch: $(basename "$p")"
+            continue
+        fi
+
         APPLY_PATCH "$PARTITION" "$FILE" "$p"
     done < <(find "$PATCHES_PATH/$TARGET" -type f -name "*.patch" | sort -n)
 
