@@ -1,13 +1,6 @@
 name: Publish ZineROM V3 Public Download
 
-on:
-  workflow_dispatch:
-    inputs:
-      run_id:
-        description: 'Successful build run ID'
-        required: true
-        default: '38817227822'
-        type: string
+on: [workflow_dispatch]
 
 permissions:
   actions: read
@@ -19,7 +12,7 @@ jobs:
       - name: Download build artifact
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ inputs.run_id }}
+          RUN_ID: '38817227822'
         run: |
           mkdir -p payload
           gh run download "$RUN_ID" --repo "$GITHUB_REPOSITORY" --dir payload
