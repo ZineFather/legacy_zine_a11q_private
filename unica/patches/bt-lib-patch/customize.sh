@@ -1,10 +1,22 @@
 if [ ! -f "$WORK_DIR/system/system/lib64/libbluetooth_jni.so" ]; then
     LOG_STEP_IN "- Extracting libbluetooth_jni.so from com.android.btservices.apex"
 
+    APEX="$WORK_DIR/system/system/apex/com.android.btservices.apex"
+    if [ ! -f "$APEX" ]; then
+        LOG "- Bluetooth APEX is not present; skipping optional library patch"
+        LOG_STEP_OUT
+        return 0
+    fi
+
     [ -d "$TMP_DIR" ] && EVAL "rm -rf \"$TMP_DIR\""
     mkdir -p "$TMP_DIR"
 
-    EVAL "unzip -j \"$WORK_DIR/system/system/apex/com.android.btservices.apex\" \"apex_payload.img\" -d \"$TMP_DIR\""
+    if ! unzip -q -j "$APEX" "apex_payload.img" -d "$TMP_DIR"; then
+        LOG "- A73 Bluetooth APEX has no unpackable payload; skipping optional library patch"
+        rm -rf "$TMP_DIR"
+        LOG_STEP_OUT
+        return 0
+    fi
 
     if ! sudo -n -v &> /dev/null; then
         LOG "\033[0;33m! Asking user for sudo password\033[0m"
@@ -14,8 +26,26 @@ if [ ! -f "$WORK_DIR/system/system/lib64/libbluetooth_jni.so" ]; then
     fi
 
     mkdir -p "$TMP_DIR/tmp_out"
-    EVAL "sudo mount -o ro \"$TMP_DIR/apex_payload.img\" \"$TMP_DIR/tmp_out\""
-    EVAL "sudo cat \"$TMP_DIR/tmp_out/lib64/libbluetooth_jni.so\" > \"$WORK_DIR/system/system/lib64/libbluetooth_jni.so\""
+    if ! sudo mount -o ro "$TMP_DIR/apex_payload.img" "$TMP_DIR/tmp_out"; then
+        LOG "- Could not mount Bluetooth APEX payload; skipping optional library patch"
+        rm -rf "$TMP_DIR"
+        LOG_STEP_OUT
+        return 0
+    fi
+    if [ ! -f "$TMP_DIR/tmp_out/lib64/libbluetooth_jni.so" ]; then
+        sudo umount "$TMP_DIR/tmp_out" || true
+        LOG "- Bluetooth library is absent from A73 APEX; skipping optional patch"
+        rm -rf "$TMP_DIR"
+        LOG_STEP_OUT
+        return 0
+    fi
+    if ! sudo cat "$TMP_DIR/tmp_out/lib64/libbluetooth_jni.so" > "$WORK_DIR/system/system/lib64/libbluetooth_jni.so"; then
+        sudo umount "$TMP_DIR/tmp_out" || true
+        rm -rf "$TMP_DIR"
+        LOG "- Could not extract Bluetooth library; skipping optional patch"
+        LOG_STEP_OUT
+        return 0
+    fi
 
     EVAL "sudo umount \"$TMP_DIR/tmp_out\""
     rm -rf "$TMP_DIR"
