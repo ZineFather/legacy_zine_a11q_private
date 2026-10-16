@@ -15,5 +15,5 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ROM_VERSION="ZineROM Project stable [a52sxq]"
+ROM_VERSION="ZineROM Project stable A73 base [a52sxq]"
 ROM_CODENAME="ZineROM"
