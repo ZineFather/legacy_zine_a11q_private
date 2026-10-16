@@ -23,13 +23,21 @@ jobs:
       - name: Checkout required build submodules
         run: |
           git submodule sync --recursive
-          git submodule update --init --depth=1 --recursive \
-            external/android-tools \
-            external/apktool \
-            external/erofs-utils \
-            external/img2sdat \
-            external/samloader \
-            external/signapk
+          for attempt in 1 2 3 4 5; do
+            if git submodule update --init --depth=1 --recursive \
+              external/android-tools \
+              external/apktool \
+              external/erofs-utils \
+              external/img2sdat \
+              external/samloader \
+              external/signapk; then
+              exit 0
+            fi
+            echo "Submodule checkout failed (attempt ${attempt}/5); retrying..."
+            sleep $((attempt * 20))
+          done
+          echo "Submodule checkout failed after 5 attempts"
+          exit 1
 
       - name: Free disk space (1/3)
         run: |
