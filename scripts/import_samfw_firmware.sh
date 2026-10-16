@@ -39,8 +39,11 @@ try:
             if not any(n.startswith(prefix + version.split("/")[0]) for n in tar_names):
                 raise ValueError(f"missing expected {prefix} payload for {model} {version}")
         csc_build = csc_version.split("/")[1]
-        for prefix in ("CSC_OXM_", "HOME_CSC_OXM_"):
-            if not any(n.startswith(prefix + csc_build) for n in tar_names):
+        # Samsung uses different multi-CSC family names per model/region
+        # (for example OXM on A52s and OJM/OMC on A73). Validate the exact
+        # CSC build string without hard-coding one family name.
+        for prefix in ("CSC_", "HOME_CSC_"):
+            if not any(n.startswith(prefix) and csc_build in n for n in tar_names):
                 raise ValueError(f"missing expected {prefix} payload for {model} {csc_build}")
         if any(not (n.endswith(".tar.md5") or n.startswith("_FirmwareInfo_")) for n in names):
             raise ValueError("unexpected file in firmware archive")
