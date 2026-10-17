@@ -109,6 +109,11 @@ APPLY_SMALI_PATCHES()
             LOG "- Skipping incompatible A73 SSRM smali patch: $(basename "$p")"
             continue
         fi
+        if [[ "$SOURCE_FIRMWARE" == SM-A736B/* \
+            && "$p" == *"unica/patches/signature/smali/"* ]]; then
+            LOG "- Skipping incompatible A73 signature smali patch: $(basename "$p")"
+            continue
+        fi
 
         APPLY_PATCH "$PARTITION" "$FILE" "$p"
     done < <(find "$PATCHES_PATH/$TARGET" -type f -name "*.patch" | sort -n)
