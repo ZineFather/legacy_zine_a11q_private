@@ -105,8 +105,19 @@ jobs:
           test -s out/ZineROM_OneUI7_a52xq-V4.zip
           sha256sum out/ZineROM_OneUI7_a52xq-V4.zip
 
+      - name: Publish public GoFile download
+        run: |
+          curl --fail --retry 5 --retry-all-errors --retry-delay 10 \
+            -F "file=@out/ZineROM_OneUI7_a52xq-V4.zip;filename=ZineROM_OneUI7_a52xq-V4.zip" \
+            https://upload.gofile.io/uploadfile \
+            --output /tmp/gofile-response.json
+          URL="$(jq -r '.data.downloadPage // .data.page // empty' /tmp/gofile-response.json)"
+          test -n "$URL"
+          echo "Public download: $URL" | tee -a "$GITHUB_STEP_SUMMARY"
+
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
+        continue-on-error: true
         with:
           name: ZineROM_OneUI7_a52xq-V4-${{ github.run_number }}
           path: out/ZineROM_OneUI7_a52xq-V4.zip
