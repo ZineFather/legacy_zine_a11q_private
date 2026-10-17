@@ -1,3 +1,7 @@
+if [[ "$SOURCE_FIRMWARE" == SM-A736B/* ]]; then
+    LOG "- Skipping AppLock module for incompatible A73 framework"
+    return 0
+fi
 
 ADD_TO_WORK_DIR "e1qzcx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.applock.xml" 0 0 644 "u:object_r:system_file:s0"
 

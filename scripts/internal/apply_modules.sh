@@ -46,6 +46,11 @@ APPLY_MODULE()
         MODAUTH="$(grep "^author" "$MODPATH/module.prop" | sed "s/author=//" | sed "s/, /, @/")"
     fi
 
+    if [[ "$SOURCE_FIRMWARE" == SM-A736B/* ]] && grep -q '^id=applock$' "$MODPATH/module.prop"; then
+        LOG "- Skipping AppLock module for incompatible A73 framework"
+        return 0
+    fi
+
     LOG_STEP_IN "- Processing \"$MODNAME\" by @$MODAUTH"
 
     if ! grep -q "^SKIPUNZIP=1$" "$MODPATH/customize.sh" 2> /dev/null; then

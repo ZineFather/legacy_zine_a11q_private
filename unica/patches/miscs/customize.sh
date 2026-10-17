@@ -34,7 +34,7 @@ fi
 
 # Set custom Display ID prop
 STOCK_PROP="$(GET_PROP "system" "ro.build.display.id")"
-CUSTOM_PROP="${ROM_VERSION} - ${ROM_CODENAME} - ${TARGET_CODENAME} [${STOCK_PROP}]"
+CUSTOM_PROP="${ROM_VERSION} - ${TARGET_CODENAME} [${STOCK_PROP}]"
 SET_PROP "system" "ro.build.display.id" "$CUSTOM_PROP"
 
 # Crok's RAM Managment Fix
