@@ -1,6 +1,10 @@
 if [ "$TARGET_SINGLE_SYSTEM_IMAGE" == "self" ]; then
     return 0
 fi
+if [[ "$SOURCE_FIRMWARE" == SM-A736B/* ]]; then
+    LOG "- Skipping incompatible A73 platform signature customization"
+    return 0
+fi
 
 CERT_PREFIX="aosp_platform"
 $ROM_IS_OFFICIAL && CERT_PREFIX="platform"
