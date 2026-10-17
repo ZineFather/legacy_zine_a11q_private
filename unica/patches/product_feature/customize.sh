@@ -405,7 +405,8 @@ if { [[ "$TARGET_CODENAME" == "a52sxq" ]] || [[ "$TARGET_CODENAME" == "a73xq" ]]
         "$SRC_DIR/unica/patches/product_feature/ssrm/SamsungDeviceHealthManagerService.apk/0001-Nuke-SSRM-Warning-dialog.patch"
 fi
 
-if [ ! -f "$FW_DIR/${MODEL}_${REGION}/vendor/etc/permissions/android.hardware.strongbox_keystore.xml" ]; then
+if [ ! -f "$FW_DIR/${MODEL}_${REGION}/vendor/etc/permissions/android.hardware.strongbox_keystore.xml" ] \
+    && [[ "$SOURCE_FIRMWARE" != SM-A736B/* ]]; then
     LOG_STEP_IN "- Applying strongbox patches"
     APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/strongbox/framework.jar/0001-Disable-StrongBox-in-DevRootKeyATCmd.patch"
     LOG_STEP_OUT
