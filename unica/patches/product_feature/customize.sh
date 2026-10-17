@@ -34,6 +34,10 @@ if [[ "$SOURCE_PRODUCT_FIRST_API_LEVEL" != "$TARGET_PRODUCT_FIRST_API_LEVEL" ]];
     system/framework/services.jar/smali_classes2/com/android/server/power/PowerManagerUtil.smali
     "
     for f in $FTP; do
+        if [ ! -f "$APKTOOL_DIR/$f" ]; then
+            LOG "- Skipping absent A73 MAINLINE_API_LEVEL file: $(basename "$f")"
+            continue
+        fi
         sed -i \
             "s/\"MAINLINE_API_LEVEL: $SOURCE_PRODUCT_FIRST_API_LEVEL\"/\"MAINLINE_API_LEVEL: $TARGET_PRODUCT_FIRST_API_LEVEL\"/g" \
             "$APKTOOL_DIR/$f"
