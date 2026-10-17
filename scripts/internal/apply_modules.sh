@@ -104,6 +104,11 @@ APPLY_SMALI_PATCHES()
             LOG "- Skipping incompatible A73 misc smali patch: $(basename "$p")"
             continue
         fi
+        if [[ "$SOURCE_FIRMWARE" == SM-A736B/* \
+            && "$p" == *"product_feature/ssrm/"* ]]; then
+            LOG "- Skipping incompatible A73 SSRM smali patch: $(basename "$p")"
+            continue
+        fi
 
         APPLY_PATCH "$PARTITION" "$FILE" "$p"
     done < <(find "$PATCHES_PATH/$TARGET" -type f -name "*.patch" | sort -n)
