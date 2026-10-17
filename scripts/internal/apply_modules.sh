@@ -54,6 +54,10 @@ APPLY_MODULE()
         LOG "- Skipping Framework hooks module for incompatible A73 framework"
         return 0
     fi
+    if [[ "$SOURCE_FIRMWARE" == SM-A736B/* ]] && grep -q '^id=knoxpatch$' "$MODPATH/module.prop"; then
+        LOG "- Skipping KnoxPatch module for incompatible A73 framework"
+        return 0
+    fi
 
     LOG_STEP_IN "- Processing \"$MODNAME\" by @$MODAUTH"
 
