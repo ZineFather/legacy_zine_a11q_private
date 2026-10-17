@@ -399,7 +399,8 @@ if $SOURCE_IS_ESIM_SUPPORTED; then
     fi
 fi
 
-if [[ "$TARGET_CODENAME" == "a52sxq" ]] || [[ "$TARGET_CODENAME" == "a73xq" ]] || [[ "$TARGET_CODENAME" == "m52xq" ]]; then
+if { [[ "$TARGET_CODENAME" == "a52sxq" ]] || [[ "$TARGET_CODENAME" == "a73xq" ]] || [[ "$TARGET_CODENAME" == "m52xq" ]]; } \
+    && [[ "$SOURCE_FIRMWARE" != SM-A736B/* ]]; then
     APPLY_PATCH "system" "system/priv-app/SamsungDeviceHealthManagerService/SamsungDeviceHealthManagerService.apk" \
         "$SRC_DIR/unica/patches/product_feature/ssrm/SamsungDeviceHealthManagerService.apk/0001-Nuke-SSRM-Warning-dialog.patch"
 fi
