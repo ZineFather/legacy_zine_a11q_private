@@ -62,6 +62,10 @@ APPLY_MODULE()
         LOG "- Skipping Network Speed module for incompatible A73 SystemUI"
         return 0
     fi
+    if [[ "$SOURCE_FIRMWARE" == SM-A736B/* ]] && grep -q '^id=settings$' "$MODPATH/module.prop"; then
+        LOG "- Skipping Settings mods module for incompatible A73 SecSettings"
+        return 0
+    fi
 
     LOG_STEP_IN "- Processing \"$MODNAME\" by @$MODAUTH"
 
