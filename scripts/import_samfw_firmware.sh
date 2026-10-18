@@ -9,9 +9,9 @@ set -euo pipefail
 : "${ODIN_DIR:?ODIN_DIR is not set}"
 command -v samloader >/dev/null || { echo "samloader executable is required" >&2; exit 1; }
 
-SOURCE_MODEL="SM-A736B"
-SOURCE_CSC="TUR"
-SOURCE_VERSION="A736BXXSCGZH1/A736BOJMCGZH1/A736BXXSCGZH1/A736BXXSCGZH1"
+SOURCE_MODEL="SM-S911B"
+SOURCE_CSC="BTB"
+SOURCE_VERSION="S911BXXS8DYI3/S911BOXM8DYI3/S911BXXS8DYI3/S911BXXS8DYI3"
 TARGET_MODEL="SM-A528B"
 TARGET_CSC="BTU"
 TARGET_VERSION="A528BXXSBGYI3/A528BOXMBGYI3/A528BXXSBGYI3/A528BXXSBGYI3"
@@ -39,11 +39,8 @@ try:
             if not any(n.startswith(prefix + version.split("/")[0]) for n in tar_names):
                 raise ValueError(f"missing expected {prefix} payload for {model} {version}")
         csc_build = csc_version.split("/")[1]
-        # Samsung uses different multi-CSC family names per model/region
-        # (for example OXM on A52s and OJM/OMC on A73). Validate the exact
-        # CSC build string without hard-coding one family name.
-        for prefix in ("CSC_", "HOME_CSC_"):
-            if not any(n.startswith(prefix) and csc_build in n for n in tar_names):
+        for prefix in ("CSC_OXM_", "HOME_CSC_OXM_"):
+            if not any(n.startswith(prefix + csc_build) for n in tar_names):
                 raise ValueError(f"missing expected {prefix} payload for {model} {csc_build}")
         if any(not (n.endswith(".tar.md5") or n.startswith("_FirmwareInfo_")) for n in names):
             raise ValueError("unexpected file in firmware archive")
