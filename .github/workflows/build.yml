@@ -102,13 +102,13 @@ jobs:
 
       - name: Verify ZIP
         run: |
-          test -s out/ZineROM_OneUI7_a52xq-V4.zip
-          sha256sum out/ZineROM_OneUI7_a52xq-V4.zip
+          test -s out/ZineROM_OneUI7_a52xq-LiveBlur-V5.zip
+          sha256sum out/ZineROM_OneUI7_a52xq-LiveBlur-V5.zip
 
       - name: Publish public GoFile download
         run: |
           curl --fail --retry 5 --retry-all-errors --retry-delay 10 \
-            -F "file=@out/ZineROM_OneUI7_a52xq-V4.zip;filename=ZineROM_OneUI7_a52xq-V4.zip" \
+            -F "file=@out/ZineROM_OneUI7_a52xq-LiveBlur-V5.zip;filename=ZineROM_OneUI7_a52xq-LiveBlur-V5.zip" \
             https://upload.gofile.io/uploadfile \
             --output /tmp/gofile-response.json
           URL="$(jq -r '.data.downloadPage // .data.page // empty' /tmp/gofile-response.json)"
@@ -119,8 +119,8 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: ZineROM_OneUI7_a52xq-V4-${{ github.run_number }}
-          path: out/ZineROM_OneUI7_a52xq-V4.zip
+          name: ZineROM_OneUI7_a52xq-LiveBlur-V5-${{ github.run_number }}
+          path: out/ZineROM_OneUI7_a52xq-LiveBlur-V5.zip
           if-no-files-found: error
           retention-days: 90
 
@@ -129,9 +129,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="zinerom-oneui7-a52sxq-${GITHUB_RUN_NUMBER}"
-          if ! gh release create "$TAG" out/ZineROM_OneUI7_a52xq-V4.zip \
+          if ! gh release create "$TAG" out/ZineROM_OneUI7_a52xq-LiveBlur-V5.zip \
             --repo "$GITHUB_REPOSITORY" \
-            --title "ZineROM Project stable A73 base [a52sxq]" \
+            --title "ZineROM Project A73 base Live Blur experimental [a52sxq]" \
             --notes "Experimental test build for Samsung Galaxy A52s 5G (SM-A528B, codename a52sxq). Base: Galaxy A73 5G (SM-A736B) One UI 7 QSSI. Includes A73 floating-feature Galaxy AI and 3D transition flags. This has not been tested on physical hardware and is not confirmed to boot. Do not flash on other models. Keep a tested stock firmware package and recovery/Download Mode access available." \
             --prerelease; then
             echo "::warning::Release creation failed; the ZIP artifact uploaded above remains available in this workflow run."

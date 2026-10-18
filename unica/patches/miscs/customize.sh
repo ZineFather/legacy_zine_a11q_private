@@ -36,6 +36,10 @@ fi
 STOCK_PROP="$(GET_PROP "system" "ro.build.display.id")"
 CUSTOM_PROP="${ROM_VERSION} - ${TARGET_CODENAME} [${STOCK_PROP}]"
 SET_PROP "system" "ro.build.display.id" "$CUSTOM_PROP"
+# Experimental native/background blur switches. Keep A73 SurfaceFlinger and
+# libgui untouched for ABI safety; unsupported properties are ignored by Android.
+SET_PROP "system" "persist.sys.unica.nativeblur" "true"
+SET_PROP "system" "ro.surface_flinger.supports_background_blur" "true"
 
 # Crok's RAM Managment Fix
 # https://github.com/crok/crokrammgmtfix/blob/master/service.sh#L27-L32
