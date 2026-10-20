@@ -1,0 +1,4 @@
+id=a115f_boot_first
+name=A115F boot-first patches
+author=ZineROM
+description=Safe A115F scaffold; no donor blobs or feature patches are applied before first boot.

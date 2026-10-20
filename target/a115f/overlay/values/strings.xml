@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Boot-first scaffold. Device display resources are added only after stock extraction. -->
+    <string name="zinerom_a115f_boot_port">Galaxy A11 boot port</string>
+</resources>
