@@ -6,4 +6,13 @@ The intended method is a Qualcomm Samsung donor system with One UI 7, while the 
 
 The first milestone is boot only: boot animation, display/touch, ADB, and `system_server`. Audio, camera, radio, Wi-Fi, Bluetooth, biometrics, performance, and Samsung AI are later milestones.
 
-A real build is gated on the exact A115F stock package. Required values are the model, CSC, binary/bootloader revision, Android build, and verified AP/BL/CP/CSC checksums. Without those files the build system can only produce an unbootable placeholder, so no flashable ZIP is labeled ready before the gate is satisfied.
+A real build is gated on the exact A115F stock package. That gate is now satisfied locally:
+
+- Target: `SM-A115F / EGY`
+- Target firmware: `A115FXXS6CWK2/A115FOJM6CWK1/A115FXXS6CWK1/A115FXXS6CWK2`
+- Target OS package: Android 12 (`OS12`), S6 bootloader binary
+- Donor: `SM-A057F / TUR`
+- Donor firmware: `A057FXXUFDZH2/A057FOJMFDZH2/A057FXXUFDZH2/A057FXXUFDZH2`
+- Donor OS package: Android 15 (`OS15`), Qualcomm One UI 7
+
+Both Samsung archives pass ZIP integrity checks and contain the expected AP, BL, CP, CSC, and HOME_CSC payloads. The local configuration preflight also passes. The remaining gate is the actual image build and hardware boot test; no flashable ZIP is labeled ready before that gate is satisfied.
