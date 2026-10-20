@@ -15,5 +15,5 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ROM_VERSION="ZineROM Project A73 base Live Blur experimental [a52sxq]"
+ROM_VERSION="ZineROM One UI 7 Boot Port [a115f]"
 ROM_CODENAME="ZineROM"

@@ -29,10 +29,10 @@ TMP_DIR="$OUT_DIR/zip"
 ZIP_FILE_SUFFIX="-sign.zip"
 ! $ROM_IS_OFFICIAL && ZIP_FILE_SUFFIX=".zip"
 
-ZIP_FILE_NAME="ZineROM_OneUI7_a52xq-LiveBlur-Logo-V6${ZIP_FILE_SUFFIX}"
+ZIP_FILE_NAME="ZineROM_OneUI7_a115f-BootPort${ZIP_FILE_SUFFIX}"
 while [ -f "$OUT_DIR/$ZIP_FILE_NAME" ]; do
     INCREMENTAL=$((INCREMENTAL + 1))
-    ZIP_FILE_NAME="ZineROM_OneUI7_a52xq-LiveBlur-Logo-V6-${INCREMENTAL}${ZIP_FILE_SUFFIX}"
+    ZIP_FILE_NAME="ZineROM_OneUI7_a115f-BootPort-${INCREMENTAL}${ZIP_FILE_SUFFIX}"
 done
 
 PRIVATE_KEY_PATH="$SRC_DIR/security/"
@@ -499,7 +499,7 @@ PRINT_HEADER()
     echo    'ui_print("  ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝ ");'
     echo    'ui_print(" ");'
     echo    'ui_print("      ZineROM Project - One UI 7.0");'
-    echo    'ui_print("             Galaxy A52s 5G");'
+    echo    'ui_print("             Galaxy A11 (SM-A115F)");'
     echo    'ui_print(" ");'
     echo    'ui_print("========================================");'
     echo -n 'ui_print("'
