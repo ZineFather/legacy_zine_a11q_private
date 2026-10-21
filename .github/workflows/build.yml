@@ -1,4 +1,4 @@
-name: Build ZineROM One UI 7 Boot Port (Galaxy A11)
+name: Build ZineROM One UI 7 (Galaxy A11)
 
 on:
   workflow_dispatch:
@@ -102,13 +102,13 @@ jobs:
 
       - name: Verify ZIP
         run: |
-          test -s out/ZineROM_OneUI7_a115f-BootPort.zip
-          sha256sum out/ZineROM_OneUI7_a115f-BootPort.zip
+          test -s out/ZineROM_OneUI7_A115F-Port-A057F.zip
+          sha256sum out/ZineROM_OneUI7_A115F-Port-A057F.zip
 
       - name: Publish public GoFile download
         run: |
           curl --fail --retry 5 --retry-all-errors --retry-delay 10 \
-            -F "file=@out/ZineROM_OneUI7_a115f-BootPort.zip;filename=ZineROM_OneUI7_a115f-BootPort.zip" \
+            -F "file=@out/ZineROM_OneUI7_A115F-Port-A057F.zip;filename=ZineROM_OneUI7_A115F-Port-A057F.zip" \
             https://upload.gofile.io/uploadfile \
             --output /tmp/gofile-response.json
           URL="$(jq -r '.data.downloadPage // .data.page // empty' /tmp/gofile-response.json)"
@@ -119,8 +119,8 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: ZineROM_OneUI7_a115f-BootPort-${{ github.run_number }}
-          path: out/ZineROM_OneUI7_a115f-BootPort.zip
+          name: ZineROM_OneUI7_A115F-Port-A057F-${{ github.run_number }}
+          path: out/ZineROM_OneUI7_A115F-Port-A057F.zip
           if-no-files-found: error
           retention-days: 90
 
@@ -129,9 +129,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="zinerom-oneui7-a115f-${GITHUB_RUN_NUMBER}"
-          if ! gh release create "$TAG" out/ZineROM_OneUI7_a115f-BootPort.zip \
+          if ! gh release create "$TAG" out/ZineROM_OneUI7_A115F-Port-A057F.zip \
             --repo "$GITHUB_REPOSITORY" \
-            --title "ZineROM One UI 7 Boot Port [a115f]" \
+            --title "ZineROM One UI 7 Port [a115f]" \
             --notes "Experimental boot-first test build for Samsung Galaxy A11 (SM-A115F). Target boot/vendor/kernel/DTBO: A115F S6 A115FXXS6CWK2. Donor system: Qualcomm Galaxy A05s One UI 7 A057FXXUFDZH2. Not confirmed to boot and not intended for any other model. Keep stock firmware and Download Mode access available." \
             --prerelease; then
             echo "::warning::Release creation failed; the ZIP artifact uploaded above remains available in this workflow run."

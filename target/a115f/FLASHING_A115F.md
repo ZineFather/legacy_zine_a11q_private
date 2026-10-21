@@ -27,7 +27,7 @@ https://xdaforums.com/t/recovery-unofficial-twrp-for-galaxy-a11-snapdragon.41970
 On the computer, from the folder containing the ZIP:
 
 ```bash
-adb sideload ZineROM_OneUI7_a115f-BootPort.zip
+adb sideload ZineROM_OneUI7_A115F-Port-A057F.zip
 ```
 
 In recovery choose **Advanced → ADB Sideload → Swipe to Start** first. The ZIP is streamed directly to recovery and does not need to be copied to encrypted internal storage.
